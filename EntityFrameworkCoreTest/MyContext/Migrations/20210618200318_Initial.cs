@@ -24,8 +24,9 @@ namespace MyContext.Migrations
                 columns: table => new
                 {
                     QuoteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SomeQuoteData = table.Column<int>(type: "int", nullable: false),
-                    ComputedColumn = table.Column<int>(type: "int", nullable: false, computedColumnSql: "case when SomeQuoteData > 0 then 1 else 0 end", stored: true),
+                    SomeQuoteData = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SomeMoreQuoteData = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ComputedColumn = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false, computedColumnSql: "(case when [SomeQuoteData]>[SomeMoreQuoteData] then [SomeQuoteData] else [SomeMoreQuoteData] end)", stored: true),
                     QuotePropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AnotherQuotePropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },

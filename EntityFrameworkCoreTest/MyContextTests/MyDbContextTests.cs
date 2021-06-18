@@ -20,7 +20,6 @@ namespace MyContextTests
 
             try
             {
-                // keepAlive.Open();
                 using var ctx = new MyDbContext(options);
                 AddEntities_ShouldWork(ctx);
             }

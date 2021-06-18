@@ -28,16 +28,20 @@ namespace MyContext.Migrations
                     b.Property<Guid?>("AnotherQuotePropertyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ComputedColumn")
+                    b.Property<decimal>("ComputedColumn")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int")
-                        .HasComputedColumnSql("case when SomeQuoteData > 0 then 1 else 0 end", true);
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasComputedColumnSql("(case when [SomeQuoteData]>[SomeMoreQuoteData] then [SomeQuoteData] else [SomeMoreQuoteData] end)", true);
 
                     b.Property<Guid>("QuotePropertyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SomeQuoteData")
-                        .HasColumnType("int");
+                    b.Property<decimal>("SomeMoreQuoteData")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SomeQuoteData")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("QuoteId");
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MyContext
 {
@@ -15,7 +14,7 @@ namespace MyContext
 
         public static DbContextOptions<MyDbContext> GetDbContextOptions(string connectionString) =>
             new DbContextOptionsBuilder<MyDbContext>()
-                .UseSqlServer(connectionString)
+                .UseSqlServer(connectionString, x => x.UseNetTopologySuite())
                 .Options;
 
         public static DbContextOptions<MyDbContext> GetInMemoryDbContextOptions(Guid dbId) =>
@@ -35,7 +34,7 @@ namespace MyContext
             var keepAliveConnection = new SqliteConnection(connectionString);
 
             var options = new DbContextOptionsBuilder<MyDbContext>()
-                .UseSqlite(keepAliveConnection)
+                .UseSqlite(keepAliveConnection, x => x.UseNetTopologySuite())
                 .EnableSensitiveDataLogging()
                 .Options;
 
@@ -67,7 +66,9 @@ namespace MyContext
 
             modelBuilder.Entity<Quote>()
                 .Property(e => e.ComputedColumn)
-                .HasComputedColumnSql("case when SomeQuoteData > 0 then 1 else 0 end", stored: true);
+                .HasPrecision(18, 2)
+                .HasComputedColumnSql("(case when [SomeQuoteData]>[SomeMoreQuoteData] then [SomeQuoteData] else [SomeMoreQuoteData] end)",
+                    stored: true);
 
             modelBuilder.Entity<QuoteProperty>()
                 .HasKey(e => e.QuotePropertyId);

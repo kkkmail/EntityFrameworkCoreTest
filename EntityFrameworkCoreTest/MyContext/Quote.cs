@@ -6,10 +6,11 @@ namespace MyContext
     public class Quote
     {
         public Guid QuoteId { get; set; }
-        public int SomeQuoteData { get; set; }
+        public decimal SomeQuoteData { get; set; }
+        public decimal SomeMoreQuoteData { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int ComputedColumn { get; private set; }
+        public decimal ComputedColumn { get; private set; }
 
         public Guid QuotePropertyId { get; set; }
         public Guid? AnotherQuotePropertyId { get; set; }
