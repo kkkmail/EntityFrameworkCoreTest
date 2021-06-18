@@ -65,6 +65,10 @@ namespace MyContext
             modelBuilder.Entity<Quote>()
                 .HasKey(e => e.QuoteId);
 
+            modelBuilder.Entity<Quote>()
+                .Property(e => e.ComputedColumn)
+                .HasComputedColumnSql("case when SomeQuoteData > 0 then 1 else 0 end", stored: true);
+
             modelBuilder.Entity<QuoteProperty>()
                 .HasKey(e => e.QuotePropertyId);
 
@@ -72,12 +76,14 @@ namespace MyContext
                 .HasOne(e => e.QuoteProperty)
                 .WithMany()
                 .HasForeignKey(e => e.QuotePropertyId)
+                .HasConstraintName("FK1")
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Quote>()
                 .HasOne(e => e.AnotherQuoteProperty)
                 .WithMany()
                 .HasForeignKey(e => e.AnotherQuotePropertyId)
+                .HasConstraintName("FK2")
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);

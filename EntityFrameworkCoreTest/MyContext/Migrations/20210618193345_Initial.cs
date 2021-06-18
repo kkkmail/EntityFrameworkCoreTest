@@ -25,6 +25,7 @@ namespace MyContext.Migrations
                 {
                     QuoteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SomeQuoteData = table.Column<int>(type: "int", nullable: false),
+                    ComputedColumn = table.Column<int>(type: "int", nullable: false, computedColumnSql: "case when SomeQuoteData > 0 then 1 else 0 end", stored: true),
                     QuotePropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AnotherQuotePropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -32,14 +33,14 @@ namespace MyContext.Migrations
                 {
                     table.PrimaryKey("PK_Quotes", x => x.QuoteId);
                     table.ForeignKey(
-                        name: "FK_Quotes_QuoteProperties_AnotherQuotePropertyId",
-                        column: x => x.AnotherQuotePropertyId,
+                        name: "FK1",
+                        column: x => x.QuotePropertyId,
                         principalTable: "QuoteProperties",
                         principalColumn: "QuotePropertyId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Quotes_QuoteProperties_QuotePropertyId",
-                        column: x => x.QuotePropertyId,
+                        name: "FK2",
+                        column: x => x.AnotherQuotePropertyId,
                         principalTable: "QuoteProperties",
                         principalColumn: "QuotePropertyId",
                         onDelete: ReferentialAction.Restrict);

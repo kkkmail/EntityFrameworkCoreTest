@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyContext;
 
 namespace MyContext.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210618181015_Initial")]
-    partial class Initial
+    partial class MyDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +27,11 @@ namespace MyContext.Migrations
 
                     b.Property<Guid?>("AnotherQuotePropertyId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ComputedColumn")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("int")
+                        .HasComputedColumnSql("case when SomeQuoteData > 0 then 1 else 0 end", true);
 
                     b.Property<Guid>("QuotePropertyId")
                         .HasColumnType("uniqueidentifier");
@@ -64,11 +67,13 @@ namespace MyContext.Migrations
                     b.HasOne("MyContext.QuoteProperty", "AnotherQuoteProperty")
                         .WithMany()
                         .HasForeignKey("AnotherQuotePropertyId")
+                        .HasConstraintName("FK2")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MyContext.QuoteProperty", "QuoteProperty")
                         .WithMany()
                         .HasForeignKey("QuotePropertyId")
+                        .HasConstraintName("FK1")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

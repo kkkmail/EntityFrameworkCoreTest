@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyContext
 {
@@ -6,6 +7,9 @@ namespace MyContext
     {
         public Guid QuoteId { get; set; }
         public int SomeQuoteData { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int ComputedColumn { get; private set; }
 
         public Guid QuotePropertyId { get; set; }
         public Guid? AnotherQuotePropertyId { get; set; }
