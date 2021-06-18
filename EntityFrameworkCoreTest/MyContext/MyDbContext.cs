@@ -65,8 +65,19 @@ namespace MyContext
                 .HasKey(e => e.QuoteId);
 
             modelBuilder.Entity<Quote>()
+                .Property(e => e.SomeQuoteData)
+                // .HasPrecision(18, 2)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<Quote>()
+                .Property(e => e.SomeMoreQuoteData)
+                // .HasPrecision(18, 2)
+                .HasPrecision(18, 4);
+
+            modelBuilder.Entity<Quote>()
                 .Property(e => e.ComputedColumn)
-                .HasPrecision(18, 2)
+                // .HasPrecision(18, 2)
+                .HasPrecision(18, 4)
                 .HasComputedColumnSql("(case when [SomeQuoteData]>[SomeMoreQuoteData] then [SomeQuoteData] else [SomeMoreQuoteData] end)",
                     stored: true);
 

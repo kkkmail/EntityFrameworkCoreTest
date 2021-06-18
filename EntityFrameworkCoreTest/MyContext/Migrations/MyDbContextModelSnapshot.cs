@@ -30,18 +30,20 @@ namespace MyContext.Migrations
 
                     b.Property<decimal>("ComputedColumn")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)")
                         .HasComputedColumnSql("(case when [SomeQuoteData]>[SomeMoreQuoteData] then [SomeQuoteData] else [SomeMoreQuoteData] end)", true);
 
                     b.Property<Guid>("QuotePropertyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("SomeMoreQuoteData")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("SomeQuoteData")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("QuoteId");
 
