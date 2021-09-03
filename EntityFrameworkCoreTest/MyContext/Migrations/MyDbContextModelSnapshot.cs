@@ -45,6 +45,10 @@ namespace MyContext.Migrations
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
 
+                    b.Property<string>("TextData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("QuoteId");
 
                     b.HasIndex("AnotherQuotePropertyId");

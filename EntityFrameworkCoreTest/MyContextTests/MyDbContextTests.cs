@@ -50,6 +50,7 @@ namespace MyContextTests
             var quote = new Quote
             {
                 SomeQuoteData = 1,
+                TextData = "12345",
                 QuoteProperty = quoteProperty,
             };
 

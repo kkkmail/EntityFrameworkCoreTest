@@ -12,6 +12,8 @@ namespace MyContext
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal ComputedColumn { get; private set; }
 
+        public string TextData { get; set; } = null!;
+
         public Guid QuotePropertyId { get; set; }
         public Guid? AnotherQuotePropertyId { get; set; }
 

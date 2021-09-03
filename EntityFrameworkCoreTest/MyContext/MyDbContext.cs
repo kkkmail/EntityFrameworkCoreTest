@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,9 +40,15 @@ namespace MyContext
                 .Options;
 
             keepAliveConnection.Open();
-            using var ctx = creator(options);
+            var cmd = keepAliveConnection.CreateCommand();
+            cmd.CommandText = "select sqlite_version()";
+            cmd.CommandType = CommandType.Text;
+            var result = cmd.ExecuteScalar();
 
-            if (!ctx.Database.EnsureCreated())
+            using var ctx = creator(options);
+            var database = ctx.Database;
+
+            if (!database.EnsureCreated())
             {
                 throw new InvalidOperationException("Can't create database.");
             }

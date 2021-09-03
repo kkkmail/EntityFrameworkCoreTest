@@ -27,6 +27,7 @@ namespace MyContext.Migrations
                     SomeQuoteData = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     SomeMoreQuoteData = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     ComputedColumn = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false, computedColumnSql: "(case when [SomeQuoteData]>[SomeMoreQuoteData] then [SomeQuoteData] else [SomeMoreQuoteData] end)", stored: true),
+                    TextData = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuotePropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AnotherQuotePropertyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },

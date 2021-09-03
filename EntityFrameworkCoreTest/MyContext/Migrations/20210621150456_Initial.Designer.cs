@@ -10,7 +10,7 @@ using MyContext;
 namespace MyContext.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210618213605_Initial")]
+    [Migration("20210621150456_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,10 @@ namespace MyContext.Migrations
                     b.Property<decimal>("SomeQuoteData")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("TextData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QuoteId");
 
